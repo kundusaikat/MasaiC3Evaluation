@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index</title>
+    <style>
+      .container1 {
+        border: 1px solid black;
+        display: flex;
+        justify-content: space-between;
+      }
+      .navbar > ul {
+        display: flex;
+        list-style-type: none;
+      }
+      .navbar > ul > li {
+        margin: 0 10px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container1">
+      <div style="width: 60%"></div>
+      <div class="navbar">
+        <ul>
+          <li>Login</li>
+          <li>Sign Up</li>
+          <li>Menu</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  document
+    .querySelector(".navbar>ul>li:nth-child(3)")
+    .addEventListener("click", function () {
+      window.location.href = "./menu.html";
+    });
+</script>

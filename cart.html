@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+    <style>
+      .checkout {
+        float: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="checkout"><h1>Checkout</h1></div>
+    <h1>Cart Page</h1>
+
+    <div>
+      <p>Total Amount : <span>0</span></p>
+    </div>
+    <div class="table">
+      <table>
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </body>
+</html>
+<script>
+  let orderArr = JSON.parse(localStorage.getItem("orderData")) || [];
+  let sum = 0;
+  orderArr.forEach(function (el) {
+    let row = document.createElement("tr");
+    let td1 = document.createElement("td");
+    td1.innerText = el.name;
+    let td2 = document.createElement("td");
+    td2.innerText = el.price;
+    row.append(td1, td2);
+    document.querySelector("tbody").append(row);
+    sum += +el.price;
+  });
+  document.querySelector("span").innerText = sum;
+  document.querySelector(".checkout>h1").addEventListener("click", function () {
+    window.location.href = "./checkout.html";
+  });
+</script>

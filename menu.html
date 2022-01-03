@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu</title>
+    <style>
+      #menu {
+        display: grid;
+        grid-template-columns: repeat(4, 20%);
+        margin-top: 5%;
+        grid-gap: 20px;
+        margin: auto;
+        justify-content: space-evenly;
+      }
+      img {
+        width: 100%;
+      }
+      #menu > div {
+        display: flex;
+        flex-direction: column;
+      }
+      #Cart {
+        float: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="Cart">
+      Go to Cart &nbsp;&nbsp;&nbsp;&nbsp;<span>Total item</span>&nbsp;<span
+        >0</span
+      >
+    </div>
+    <h1>Dishes we are curently offering.</h1>
+
+    <div id="menu"></div>
+  </body>
+</html>
+
+<script>
+  let container = document.getElementById("menu");
+  let menuDatabase = [];
+
+  // https://www.themealdb.com/api.php?ref=apilist.fun
+  fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood")
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (response) {
+      menuDatabase = response;
+      // console.log(menuDatabase);
+      appendProduct(menuDatabase.meals);
+    });
+
+  function appendProduct(d) {
+    d.forEach(function (el) {
+      let div = document.createElement("div");
+      let title = document.createElement("p");
+      title.innerText = el.strMeal;
+      let img = document.createElement("img");
+      img.src = el.strMealThumb;
+      let random = Math.ceil(Math.random() * 500);
+      while (random < 100) {
+        random = Math.ceil(Math.random() * 500);
+      }
+      let price = document.createElement("h4");
+      price.innerText = random;
+
+      let cart = document.createElement("button");
+      cart.innerText = "Add to cart";
+      cart.addEventListener("click", addItem);
+      div.append(title, img, price, cart);
+      container.appendChild(div);
+    });
+  }
+  //
+  let orderArr = JSON.parse(localStorage.getItem("orderData")) || [];
+  function addItem(event) {
+    obj = {};
+    obj.name = event.target.parentNode.querySelector("p").innerText;
+    obj.price = event.target.parentNode.querySelector("h4").innerText;
+    orderArr.push(obj);
+    localStorage.setItem("orderData", JSON.stringify(orderArr));
+  }
+  document.querySelector("#Cart>span:nth-child(2)").innerText = orderArr.length;
+  document.querySelector("#Cart").addEventListener("click", function () {
+      window.location.href = "./cart.html";
+    });
+</script>
